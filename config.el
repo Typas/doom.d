@@ -42,8 +42,8 @@
   (set-fontset-font t 'unicode
                     (font-spec :family "JuliaMono") nil 'prepend))
 
-(add-hook 'doom-init-ui-hook 'init-cjk-fonts)
-(add-hook 'doom-init-ui-hook 'init-unicode-fonts)
+;;(add-hook 'doom-init-ui-hook 'init-cjk-fonts)
+;;(add-hook 'doom-init-ui-hook 'init-unicode-fonts)
 
 (setq doom-font
       (font-spec
