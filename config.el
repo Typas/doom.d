@@ -101,7 +101,8 @@
       "q" nil)
 (map! :map evil-insert-state-map
       "C-p" nil
-      "C-n" nil)
+      "C-n" nil
+      "C-v" nil)
 (map! :leader
       "c c" nil
       "c C" nil)
