@@ -49,7 +49,7 @@
       (font-spec
        :family "Inconsolata" ;; Fira Code again once stylistic sets supported
        ;; :weight 'semi-light
-       :size (cond (IS-MAC 16.0) (IS-LINUX 15.0))
+       :size (cond (IS-MAC 16.0) (IS-LINUX 15.0) (IS-WINDOWS 15.0))
        ;; :otf '(opentype nil (ss01 ss02 ss03 ss05 ss08))
        ))
 

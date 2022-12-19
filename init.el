@@ -47,7 +47,7 @@
        ophints            ; highlight the region an operation acts on
        (popup +defaults)  ; tame sudden yet inevitable temporary windows
        ;; tabs               ; a tab bar for Emacs
-       treemacs           ; a project drawer, like neotree but cooler
+       ;; treemacs           ; a project drawer, like neotree but cooler
        ;; unicode            ; extended unicode support for various languages
        vc-gutter          ; vcs diff in the fringe
        ;; vi-tilde-fringe    ; fringe tildes to mark beyond EOB
@@ -98,8 +98,7 @@
        (eval +overlay)    ; run code, run (also, repls)
        ;; gist               ; interacting with github gists
        lookup             ; navigate your code and its documentation
-       ;; (lsp +eglot)       ; M-x vscode
-        lsp               ; M-x vscode
+       lsp                ; M-x vscode
        magit              ; a git porcelain for Emacs
        ;; make               ; run make tasks from Emacs
        ;; pass               ; password manager for nerds
@@ -109,6 +108,7 @@
        ;; taskrunner         ; taskrunner for all your projects
        ;; terraform          ; infrastructure as code
        ;; tmux               ; an API for interacting with tmux
+       tree-sitter        ; syntax and parsing, sitting in a tree...
        ;; upload             ; map local to remote projects via ssh/ftp
 
        :lang
