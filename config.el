@@ -28,29 +28,29 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one-light
-      doom-themes-enable-italic nil)
+(setq doom-theme 'doom-one-light)
 
 ;; font settings
+;; the order of hook matters
 (defun init-cjk-fonts ()
   (set-fontset-font t 'unicode
                     (font-spec :family "Noto Sans CJK TC") nil 'prepend)
-  ;; (setq face-font-rescale-alist '(("Noto Sans CJK TC" . 1.2)))
+  (setq face-font-rescale-alist '(("Noto Sans CJK TC" . 1.2)))
   )
 
 (defun init-unicode-fonts ()
   (set-fontset-font t 'unicode
                     (font-spec :family "JuliaMono") nil 'prepend))
 
-;;(add-hook 'doom-init-ui-hook 'init-cjk-fonts)
-;;(add-hook 'doom-init-ui-hook 'init-unicode-fonts)
+(add-hook 'doom-init-ui-hook 'init-cjk-fonts)
+(add-hook 'doom-init-ui-hook 'init-unicode-fonts)
 
 (setq doom-font
       (font-spec
-       :family "Inconsolata" ;; Fira Code again once stylistic sets supported
-       ;; :weight 'semi-light
+       ;; :family "Inconsolata"
+       :family "Fira Code"
        :size (cond (IS-MAC 16.0) (IS-LINUX 15.0) (IS-WINDOWS 15.0))
-       ;; :otf '(opentype nil (ss01 ss02 ss03 ss05 ss08))
+       :otf '(latn nil (ss01 ss02 ss03 ss05 ss08)) ; this line is actually useless for now
        ))
 
 (setq doom-variable-pitch-font (font-spec :family "Noto Sans CJK TC"))
@@ -88,13 +88,6 @@
 ;; they are implemented.
 (when IS-MAC (setq dired-use-ls-dired nil))
 
-;; Treat underscores as word
-(add-hook! 'python-mode-hook (modify-syntax-entry ?_ "w"))
-(add-hook! 'rustic-mode-hook (modify-syntax-entry ?_ "w"))
-(add-hook! 'c++-mode-hook (modify-syntax-entry ?_ "w"))
-(add-hook! 'c-mode-hook (modify-syntax-entry ?_ "w"))
-(add-hook! 'julia-mode-hook (modify-syntax-entry ?_ "w"))
-
 (add-hook! 'prog-mode-hook #'rainbow-delimiters-mode)
 
 (map! :map evil-normal-state-map
@@ -126,40 +119,40 @@
 (after! projectile
   (add-to-list 'projectile-project-root-files-bottom-up "Cargo.toml"))
 
-(use-package! citre
-  :defer t
-  :init
-  (require 'citre-config)
-  (map! :leader
-        (:prefix "c"
-         :desc "Jump to definition" "j" #'citre-jump
-         :desc "Back to reference" "b" #'citre-jump-back
-         :desc "Peek definition" "p" #'citre-peek)
-        (:prefix "p"
-         :desc "Update tags file" "u" #'citre-update-this-tags-file)
-        )
-  (setq citre-project-root-function #'projectile-project-root)
-  (setq citre-default-create-tags-file-location 'package-cache)
-  (setq citre-use-project-root-when-creating-tags t)
-  (setq citre-prompt-language-for-ctags-command t)
-  (setq citre-auto-enable-citre-mode-modes '(prog-mode))
+;; (use-package! citre
+;;   :defer t
+;;   :init
+;;   (require 'citre-config)
+;;   (map! :leader
+;;         (:prefix "c"
+;;          :desc "Jump to definition" "j" #'citre-jump
+;;          :desc "Back to reference" "b" #'citre-jump-back
+;;          :desc "Peek definition" "p" #'citre-peek)
+;;         (:prefix "p"
+;;          :desc "Update tags file" "u" #'citre-update-this-tags-file)
+;;         )
+;;   (setq citre-project-root-function #'projectile-project-root)
+;;   (setq citre-default-create-tags-file-location 'package-cache)
+;;   (setq citre-use-project-root-when-creating-tags t)
+;;   (setq citre-prompt-language-for-ctags-command t)
+;;   (setq citre-auto-enable-citre-mode-modes '(prog-mode))
 
-  :config
-  (defun company-citre (-command &optional -arg &rest _ignored)
-    "Completion backend of Citre.  Execute COMMAND with ARG and IGNORED."
-    (interactive (list 'interactive))
-    (cl-case -command
-      (interactive (company-begin-backend 'company-citre))
-      (prefix (and (bound-and-true-p citre-mode)
-                   (or (citre-get-symbol) 'stop)))
-      (meta (citre-get-property 'signature -arg))
-      (annotation (citre-capf--get-annotation -arg))
-      (candidates (all-completions -arg (citre-capf--get-collection -arg)))
-      (ignore-case (not citre-completion-case-sensitive))))
+;;   :config
+;;   (defun company-citre (-command &optional -arg &rest _ignored)
+;;     "Completion backend of Citre.  Execute COMMAND with ARG and IGNORED."
+;;     (interactive (list 'interactive))
+;;     (cl-case -command
+;;       (interactive (company-begin-backend 'company-citre))
+;;       (prefix (and (bound-and-true-p citre-mode)
+;;                    (or (citre-get-symbol) 'stop)))
+;;       (meta (citre-get-property 'signature -arg))
+;;       (annotation (citre-capf--get-annotation -arg))
+;;       (candidates (all-completions -arg (citre-capf--get-collection -arg)))
+;;       (ignore-case (not citre-completion-case-sensitive))))
 
-  ;; (setq company-backends '((company-capf company-citre :with company-yasnippet :separate)))
-  (setq +lsp-company-backends
-        '(:separate company-capf company-yasnippet company-citre)))
+;;   ;; (setq company-backends '((company-capf company-citre :with company-yasnippet :separate)))
+;;   (setq +lsp-company-backends
+;;         '(:separate company-capf company-yasnippet company-citre)))
 
 ;; some annoying company settings
 
