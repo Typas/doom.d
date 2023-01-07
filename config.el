@@ -49,7 +49,7 @@
       (font-spec
        ;; :family "Inconsolata"
        :family "Fira Code"
-       :size (cond (IS-MAC 16.0) (IS-LINUX 15.0) (IS-WINDOWS 15.0))
+       :size 14.0
        :otf '(latn nil (ss01 ss02 ss03 ss05 ss08)) ; this line is actually useless for now
        ))
 
