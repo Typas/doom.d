@@ -29,6 +29,8 @@
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
 (setq doom-theme 'doom-one-light)
+(setq doom-themes-enable-bold t
+      doom-themes-enable-italic t)
 
 ;; font settings
 ;; the order of hook matters
@@ -50,7 +52,7 @@
        ;; :family "Inconsolata"
        :family "Fira Code"
        :size 14.0
-       :otf '(latn nil (ss01 ss02 ss03 ss05 ss08)) ; this line is actually useless for now
+       :otf '(latn nil (ss01 ss03 ss05)) ; this line is actually useless for now
        ))
 
 (setq doom-variable-pitch-font (font-spec :family "Noto Sans CJK TC"))

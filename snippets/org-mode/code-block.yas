@@ -1,0 +1,7 @@
+# name: code block
+# key: <s
+# --
+#+NAME: ${1:name}
+#+BEGIN_SRC ${4:${3:${2:language} switches} header_arg}
+    $0
+#+END_SRC
