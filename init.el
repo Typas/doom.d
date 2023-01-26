@@ -128,21 +128,21 @@
        ;; erlang             ; an elegant language for a more civilized age
        ;; ess                ; emacs speaks statistics
        ;; faust              ; dsp, but you get to keep your soul
-       fortran            ; in FORTRAN, GOD is REAL (unless declared INTEGER)
+       (fortran +tree-sitter)            ; in FORTRAN, GOD is REAL (unless declared INTEGER)
        ;; fsharp             ; ML stands for Microsoft's Language
        ;; fstar              ; (dependent) types and (monadic) effects and Z3
        ;; gdscript           ; the language you waited for
-       (go +tree-sitter)                 ; the hipster dialect
+       (go +lsp +tree-sitter)                 ; the hipster dialect
        ;; (graphql +lsp)     ; Give queries a REST
-       ;; (haskell +lsp)     ; a language that's lazier than I am
+       (haskell +lsp +tree-sitter)     ; a language that's lazier than I am
        ;; hy                 ; readability of scheme w/ speed of python
        ;; idris              ; a language you can depend on
        (json +tree-sitter)               ; At least it ain't XML
        ;; (java +lsp)        ; the poster child for carpal tunnel syndrome
        (javascript +tree-sitter)         ; all(hope(abandon(ye(who(enter(here))))))
-       (julia +tree-sitter)              ; a better, faster MATLAB
+       (julia +lsp +tree-sitter)              ; a better, faster MATLAB
        ;; kotlin             ; a better, slicker Java(Script)
-       (latex +lsp)       ; writing papers in Emacs has never been so fun
+       (latex +lsp +tree-sitter)       ; writing papers in Emacs has never been so fun
        ;; lean               ; for folks with too much to prove
        ;; ledger             ; be audit you can be
        (lua +tree-sitter)                ; one-based indices? one-based indices
@@ -164,7 +164,7 @@
        (rust +lsp +tree-sitter)        ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
        ;; scala              ; java, but good
        ;; scheme             ; a fully conniving family of lisps
-       (sh +tree-sitter)                ; she sells {ba,z,fi}sh shells on the C xor
+       (sh +lsp +tree-sitter)                ; she sells {ba,z,fi}sh shells on the C xor
        ;; sml
        ;; solidity           ; do you need a blockchain? No.
        ;; swift              ; who asked for emoji variables?
