@@ -50,9 +50,9 @@
 (setq doom-font
       (font-spec
        ;; :family "Inconsolata"
-       :family "Fira Code"
+       :family "Fira Code Typas"
        :size 14.0
-       :otf '(latn nil (ss01 ss03 ss05)) ; this line is actually useless for now
+       ;; :otf '(latn nil (ss01 ss03 ss05)) ; this line is actually useless for now
        ))
 
 (setq doom-variable-pitch-font (font-spec :family "Noto Sans CJK TC"))
