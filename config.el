@@ -34,28 +34,42 @@
 
 ;; font settings
 ;; the order of hook matters
-(defun init-cjk-fonts ()
-  (set-fontset-font t 'unicode
-                    (font-spec :family "Noto Sans CJK TC") nil 'prepend)
-  (setq face-font-rescale-alist '(("Noto Sans CJK TC" . 1.2)))
-  )
+(when (doom-font-exists-p "LXGW WenKai Mono TC")
+  (defun init-cjk-main-font ()
+    (set-fontset-font t 'unicode
+                      (font-spec :family "LXGW WenKai Mono TC") nil 'prepend)
+    (setq face-font-rescale-alist '(("LXGW WenKai Mono TC" . 1.2))))
+    (add-hook 'doom-init-ui-hook 'init-cjk-main-font))
 
-(defun init-unicode-fonts ()
-  (set-fontset-font t 'unicode
-                    (font-spec :family "JuliaMono") nil 'prepend))
+(when (doom-font-exists-p "Noto Sans Mono CJK TC")
+  (defun init-cjk-fallback ()
+    (set-fontset-font t 'unicode
+                      (font-spec :family "Noto Sans Mono CJK TC") nil 'prepend)
+    (setq face-font-rescale-alist '(("Noto Sans Mono CJK TC" . 1.2))))
+  (add-hook 'doom-init-ui-hook 'init-cjk-fallback))
 
-(add-hook 'doom-init-ui-hook 'init-cjk-fonts)
-(add-hook 'doom-init-ui-hook 'init-unicode-fonts)
+(when (doom-font-exists-p "JuliaMono")
+  (defun init-unicode-font ()
+    (set-fontset-font t 'unicode
+                      (font-spec :family "JuliaMono") nil 'prepend))
+  (add-hook 'doom-init-ui-hook 'init-unicode-font))
 
-(setq doom-font
-      (font-spec
-       ;; :family "Inconsolata"
-       :family "Fira Code Typas"
-       :size 14.0
-       ;; :otf '(latn nil (ss01 ss03 ss05)) ; this line is actually useless for now
-       ))
 
-(setq doom-variable-pitch-font (font-spec :family "Noto Sans CJK TC"))
+(setq doom-font (font-spec
+                 :family "Fira Code Typas"
+                 :size 14.0))
+(unless (doom-font-exists-p doom-font)
+  (setq doom-font (font-spec
+                   :family "Inconsolata"
+                   :size 16.0))
+  (unless (doom-font-exists-p doom-font)
+    (setq doom-font nil)))
+
+(setq doom-variable-pitch-font (font-spec :family "LXGW WenKai TC"))
+(unless (doom-font-exists-p doom-variable-pitch-font)
+  (setq doom-variable-pitch-font (font-spec :family "Noto Sans CJK TC"))
+  (unless (doom-font-exists-p doom-variable-pitch-font)
+    (setq doom-variable-pitch-font nil)))
 
 
 ;; native lazy compilation
@@ -160,3 +174,6 @@
 
 (after! company
   (add-to-list 'company-transformers #'delete-dups))
+
+(add-hook 'org-mode-hook #'valign-mode)
+(add-hook 'markdown-mode-hook #'valign-mode)
