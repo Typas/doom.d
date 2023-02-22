@@ -28,35 +28,36 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one-light)
 (setq doom-themes-enable-bold t
       doom-themes-enable-italic t)
+(setq doom-theme 'doom-one-light)
 
 ;; font settings
 ;; the order of hook matters
-(when (doom-font-exists-p "LXGW WenKai Mono TC")
-  (defun init-cjk-main-font ()
-    (set-fontset-font t 'unicode
-                      (font-spec :family "LXGW WenKai Mono TC") nil 'prepend)
-    (setq face-font-rescale-alist '(("LXGW WenKai Mono TC" . 1.2))))
-    (add-hook 'doom-init-ui-hook 'init-cjk-main-font))
+(defun push-font (fontfamily)
+  "Add font if FONTFAMILY exists."
+  (when (doom-font-exists-p fontfamily)
+    (add-hook 'doom-init-ui-hook
+              (lambda () (set-fontset-font t 'unicode
+                                      (font-spec :family fontfamily)
+                                      nil 'prepend)))))
 
-(when (doom-font-exists-p "Noto Sans Mono CJK TC")
-  (defun init-cjk-fallback ()
-    (set-fontset-font t 'unicode
-                      (font-spec :family "Noto Sans Mono CJK TC") nil 'prepend)
-    (setq face-font-rescale-alist '(("Noto Sans Mono CJK TC" . 1.2))))
-  (add-hook 'doom-init-ui-hook 'init-cjk-fallback))
+(defun push-cjk-font (fontfamily scale)
+  "Add cjk font if FONTFAMILY exists, and set the scale to SCALE."
+  (when (doom-font-exists-p fontfamily)
+    (add-hook 'doom-init-ui-hook
+              (lambda ()
+                (dolist (charset '(kana han cjk-misc bopomofo hangul))
+                  (set-fontset-font t charset
+                                    (font-spec :family fontfamily)
+                                    nil 'prepend))
+                (setq face-font-scale-alist '((fontname . scale)))))))
 
-(when (doom-font-exists-p "JuliaMono")
-  (defun init-unicode-font ()
-    (set-fontset-font t 'unicode
-                      (font-spec :family "JuliaMono") nil 'prepend))
-  (add-hook 'doom-init-ui-hook 'init-unicode-font))
-
+(push-cjk-font "Typas Mono CJK TC" 1.2)
+(push-font "JuliaMono")
 
 (setq doom-font (font-spec
-                 :family "Fira Code Typas"
+                 :family "Typas Code"
                  :size 14.0))
 (unless (doom-font-exists-p doom-font)
   (setq doom-font (font-spec
@@ -65,11 +66,9 @@
   (unless (doom-font-exists-p doom-font)
     (setq doom-font nil)))
 
-(setq doom-variable-pitch-font (font-spec :family "LXGW WenKai TC"))
+(setq doom-variable-pitch-font (font-spec :family "Noto Sans CJK TC" :size 20))
 (unless (doom-font-exists-p doom-variable-pitch-font)
-  (setq doom-variable-pitch-font (font-spec :family "Noto Sans CJK TC"))
-  (unless (doom-font-exists-p doom-variable-pitch-font)
-    (setq doom-variable-pitch-font nil)))
+  (setq doom-variable-pitch-font nil))
 
 
 ;; native lazy compilation
