@@ -134,41 +134,6 @@
 (after! projectile
   (add-to-list 'projectile-project-root-files-bottom-up "Cargo.toml"))
 
-;; (use-package! citre
-;;   :defer t
-;;   :init
-;;   (require 'citre-config)
-;;   (map! :leader
-;;         (:prefix "c"
-;;          :desc "Jump to definition" "j" #'citre-jump
-;;          :desc "Back to reference" "b" #'citre-jump-back
-;;          :desc "Peek definition" "p" #'citre-peek)
-;;         (:prefix "p"
-;;          :desc "Update tags file" "u" #'citre-update-this-tags-file)
-;;         )
-;;   (setq citre-project-root-function #'projectile-project-root)
-;;   (setq citre-default-create-tags-file-location 'package-cache)
-;;   (setq citre-use-project-root-when-creating-tags t)
-;;   (setq citre-prompt-language-for-ctags-command t)
-;;   (setq citre-auto-enable-citre-mode-modes '(prog-mode))
-
-;;   :config
-;;   (defun company-citre (-command &optional -arg &rest _ignored)
-;;     "Completion backend of Citre.  Execute COMMAND with ARG and IGNORED."
-;;     (interactive (list 'interactive))
-;;     (cl-case -command
-;;       (interactive (company-begin-backend 'company-citre))
-;;       (prefix (and (bound-and-true-p citre-mode)
-;;                    (or (citre-get-symbol) 'stop)))
-;;       (meta (citre-get-property 'signature -arg))
-;;       (annotation (citre-capf--get-annotation -arg))
-;;       (candidates (all-completions -arg (citre-capf--get-collection -arg)))
-;;       (ignore-case (not citre-completion-case-sensitive))))
-
-;;   ;; (setq company-backends '((company-capf company-citre :with company-yasnippet :separate)))
-;;   (setq +lsp-company-backends
-;;         '(:separate company-capf company-yasnippet company-citre)))
-
 ;; some annoying company settings
 
 (after! company
