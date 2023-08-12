@@ -72,7 +72,9 @@
 
 
 ;; native lazy compilation
-(setq native-comp-deferred-compilation t)
+(if (version< emacs-version "29.1")
+    (setq native-comp-deferred-compilation t)
+  (setq native-comp-jit-compilation t))
 ;; i just don't want to see warning anymore
 (setq native-comp-async-report-warnings-errors nil)
 
@@ -101,8 +103,8 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
-(when IS-MAC (setq dired-use-ls-dired nil))
 
+(setq dired-use-ls-dired nil)
 (add-hook! 'prog-mode-hook #'rainbow-delimiters-mode)
 
 (map! :map evil-normal-state-map
@@ -121,15 +123,14 @@
       :desc "Uncomment region" "c u" #'uncomment-region)
 
 (after! org
-  (add-to-list 'org-src-lang-modes '("rust" . rustic))
-  (add-to-list 'org-src-lang-modes '("toml" . conf-toml)))
+      (progn (add-to-list 'org-src-lang-modes '("rust" . rustic))))
 
 (setq TeX-engine 'xetex)
 
-(setq rustic-lsp-server 'rust-analyzer)
-(after! rustic
-  (setq lsp-rust-analyzer-cargo-load-out-dirs-from-check t)
-  (setq lsp-rust-analyzer-proc-macro-enable t))
+(when (version< emacs-version "29.1")
+ (after! rustic
+   (setq lsp-rust-analyzer-cargo-load-out-dirs-from-check t)
+   (setq lsp-rust-analyzer-proc-macro-enable t)))
 
 (after! projectile
   (add-to-list 'projectile-project-root-files-bottom-up "Cargo.toml"))
@@ -141,3 +142,22 @@
 
 (add-hook 'org-mode-hook #'valign-mode)
 (add-hook 'markdown-mode-hook #'valign-mode)
+
+(unless (version< emacs-version "29.1")
+  (after! eglot
+    (add-to-list 'eglot-server-programs
+                 `(rust-mode . ("rust-analyzer" :initializationOptions
+                                ( :procMacro (:enable t)
+                                             :cargo ( :buildScripts (:enable t)
+                                                                    :features "all")))))))
+
+(unless (version< emacs-version "29.1")
+  (setq major-mode-remap-alist
+        '((rustic-mode . rust-ts-mode)))
+  (setq rust-ts-mode-hook rustic-mode-hook))
+
+(unless (version< emacs-version "29.1")
+  (use-package! treesit-auto
+    :config
+    (setq treesit-auto-install 'prompt)
+    (global-treesit-auto-mode)))
