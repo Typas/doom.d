@@ -149,7 +149,9 @@
                  `(rust-mode . ("rust-analyzer" :initializationOptions
                                 ( :procMacro (:enable t)
                                              :cargo ( :buildScripts (:enable t)
-                                                                    :features "all")))))))
+                                                                    :features "all")))))
+    (map! :leader
+          :desc "LSP format buffer" "c F" #'eglot-format-buffer)))
 
 (unless (version< emacs-version "29.1")
   (setq major-mode-remap-alist
