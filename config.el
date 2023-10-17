@@ -70,7 +70,6 @@
 (unless (doom-font-exists-p doom-variable-pitch-font)
   (setq doom-variable-pitch-font nil))
 
-
 ;; native lazy compilation
 (if (version< emacs-version "29.1")
     (setq native-comp-deferred-compilation t)
@@ -127,31 +126,20 @@
 
 (setq TeX-engine 'xetex)
 
-(when (version< emacs-version "29.1")
- (after! rustic
-   (setq lsp-rust-analyzer-cargo-load-out-dirs-from-check t)
-   (setq lsp-rust-analyzer-proc-macro-enable t)))
-
 (after! projectile
   (add-to-list 'projectile-project-root-files-bottom-up "Cargo.toml"))
 
 ;; some annoying company settings
-
 (after! company
   (add-to-list 'company-transformers #'delete-dups))
 
 (add-hook 'org-mode-hook #'valign-mode)
 (add-hook 'markdown-mode-hook #'valign-mode)
 
-(unless (version< emacs-version "29.1")
-  (after! eglot
-    (add-to-list 'eglot-server-programs
-                 `(rust-mode . ("rust-analyzer" :initializationOptions
-                                ( :procMacro (:enable t)
-                                             :cargo ( :buildScripts (:enable t)
-                                                                    :features "all")))))
-    (map! :leader
-          :desc "LSP format buffer" "c F" #'eglot-format-buffer)))
+(when (version< emacs-version "29.1")
+ (after! rustic
+   (setq lsp-rust-analyzer-cargo-load-out-dirs-from-check t)
+   (setq lsp-rust-analyzer-proc-macro-enable t)))
 
 (unless (version< emacs-version "29.1")
   (setq major-mode-remap-alist
