@@ -8,6 +8,10 @@
 (setq user-full-name "Typas Liao"
       user-mail-address "typascake@gmail.com")
 
+(if (eq system-type 'windows-nt)
+    (set-selection-coding-system 'utf-16le-dos)
+    (set-selection-coding-system 'utf-8))
+
 (set-file-template! "\\.tex$" :trigger "__tex" :mode 'latex-mode)
 (set-file-template! "/beamer\\.tex$" :trigger "__beamer.tex" :mode 'latex-mode)
 (set-file-template! "\\.gitignore$" :trigger "__" :mode 'gitignore-mode)
