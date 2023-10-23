@@ -32,8 +32,10 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-themes-enable-bold t
-      doom-themes-enable-italic t)
+(if (eq system-type 'windows-nt)
+    (setq doom-themes-enable-bold nil)
+    (setq doom-themes-enable-bold t))
+(setq doom-themes-enable-italic t)
 (setq doom-theme 'doom-one-light)
 
 ;; font settings
