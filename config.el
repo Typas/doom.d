@@ -8,7 +8,7 @@
 (setq user-full-name "Typas Liao"
       user-mail-address "typascake@gmail.com")
 
-(if (eq system-type 'windows-nt)
+(if (featurep :system 'windows)
     (set-selection-coding-system 'utf-16le-dos)
     (set-selection-coding-system 'utf-8))
 
@@ -32,7 +32,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(if (eq system-type 'windows-nt)
+(if (featurep :system 'windows)
     (setq doom-themes-enable-bold nil)
     (setq doom-themes-enable-bold t))
 (setq doom-themes-enable-italic t)
@@ -50,14 +50,15 @@
 
 (defun push-cjk-font (fontfamily scale)
   "Add cjk font if FONTFAMILY exists, and set the scale to SCALE."
-  (when (doom-font-exists-p fontfamily)
-    (add-hook 'doom-init-ui-hook
-              (lambda ()
-                (dolist (charset '(kana han cjk-misc bopomofo hangul))
-                  (set-fontset-font t charset
-                                    (font-spec :family fontfamily)
-                                    nil 'prepend))
-                (setq face-font-scale-alist '((fontname . scale)))))))
+  (if (doom-font-exists-p fontfamily)
+      (add-hook 'doom-init-ui-hook
+                (lambda ()
+                  (dolist (charset '(kana han cjk-misc bopomofo hangul))
+                    (set-fontset-font t charset
+                                      (font-spec :family fontfamily)
+                                      nil 'prepend))
+                  (setq face-font-scale-alist '((fontname . scale))))))
+  (ignore scale))
 
 (push-cjk-font "Typas Mono CJK TC" 1.2)
 (push-font "JuliaMono")
@@ -77,8 +78,7 @@
   (setq doom-variable-pitch-font nil))
 
 ;; native lazy compilation
-(if (version< emacs-version "29.1")
-    (setq native-comp-deferred-compilation t)
+(unless (version< emacs-version "29.1")
   (setq native-comp-jit-compilation t))
 ;; i just don't want to see warning anymore
 (setq native-comp-async-report-warnings-errors nil)
@@ -147,13 +147,3 @@
    (setq lsp-rust-analyzer-cargo-load-out-dirs-from-check t)
    (setq lsp-rust-analyzer-proc-macro-enable t)))
 
-(unless (version< emacs-version "29.1")
-  (setq major-mode-remap-alist
-        '((rustic-mode . rust-ts-mode)))
-  (setq rust-ts-mode-hook rustic-mode-hook))
-
-(unless (version< emacs-version "29.1")
-  (use-package! treesit-auto
-    :config
-    (setq treesit-auto-install 'prompt)
-    (global-treesit-auto-mode)))

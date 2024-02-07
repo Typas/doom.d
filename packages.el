@@ -52,6 +52,4 @@
 (package! doom-snippets :ignore t)
 
 (package! valign)
-(unless (version< emacs-version "29.1")
-  (package! treesit-auto))
 (package! color-theme-sanityinc-tomorrow)
