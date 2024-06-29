@@ -50,6 +50,7 @@
 
 (package! evil-escape :disable t)
 (package! doom-snippets :ignore t)
+(package! auctex :pin "86b2397abdc20a638e5751251026727bc6282022")
 
 (package! valign)
 (package! color-theme-sanityinc-tomorrow)
