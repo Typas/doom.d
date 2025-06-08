@@ -84,14 +84,14 @@
        vterm              ; the best terminal emulation in Emacs
 
        :checkers
-       syntax             ; tasing you for every semicolon you forget
+       (syntax +flymake +icons)             ; tasing you for every semicolon you forget
        ;; (spell +flyspell)  ; tasing you for misspelling mispelling
        ;; grammar            ; tasing grammar mistake every you make
 
        :tools
        ;; ansible
        biblio             ; Writes a PhD for you (citation needed)
-       ;; debugger           ; FIXME stepping through code, to help you add bugs
+       debugger           ; FIXME stepping through code, to help you add bugs
        ;; direnv
        ;; docker
        editorconfig       ; let someone else argue about tabs vs spaces
@@ -99,7 +99,7 @@
        (eval +overlay)    ; run code, run (also, repls)
        ;; gist               ; interacting with github gists
        ;; lookup             ; navigate your code and its documentation
-       lsp                ; M-x vscode
+       (lsp +eglot)                ; M-x vscode
        magit              ; a git porcelain for Emacs
        ;; make               ; run make tasks from Emacs
        ;; pass               ; password manager for nerds
@@ -115,7 +115,7 @@
        :lang
        ;; agda               ; types of types of types of types...
        ;; beancount          ; mind the GAAP
-       (cc +lsp)          ; C/C++/Obj-C madness
+       (cc +lsp +tree-sitter)          ; C/C++/Obj-C madness
        ;; clojure            ; java with a lisp
        ;; common-lisp        ; if you've seen one lisp, you've seen them all
        ;; coq                ; proofs-as-programs
@@ -138,7 +138,7 @@
        (haskell +lsp +tree-sitter)     ; a language that's lazier than I am
        ;; hy                 ; readability of scheme w/ speed of python
        ;; idris              ; a language you can depend on
-       (json +tree-sitter)                ; At least it ain't XML
+       (json +lsp +tree-sitter)                ; At least it ain't XML
        ;; (java +lsp)        ; the poster child for carpal tunnel syndrome
        ;;(javascript +tree-sitter)         ; all(hope(abandon(ye(who(enter(here))))))
        (julia +lsp +tree-sitter)              ; a better, faster MATLAB
@@ -147,7 +147,7 @@
        ;; lean               ; for folks with too much to prove
        ;; ledger             ; be audit you can be
        (lua +grip +tree-sitter)                ; one-based indices? one-based indices
-       markdown           ; writing docs for people to ignore
+       (markdown +grip +tree-sitter)           ; writing docs for people to ignore
        ;; nim                ; python + lisp at the speed of c
        ;; nix                ; I hereby declare "nix geht mehr!"
        ;; ocaml              ; an objective camel
@@ -171,7 +171,7 @@
        ;; swift              ; who asked for emoji variables?
        ;; terra              ; Earth and Moon in alignment for performance.
        ;; web                ; the tubes
-       (yaml +tree-sitter)               ; JSON, but readable
+       (yaml +lsp +tree-sitter)               ; JSON, but readable
        ;; zig                ; C, but simpler
 
        :email
