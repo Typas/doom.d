@@ -36,7 +36,7 @@
     (setq doom-themes-enable-bold nil)
     (setq doom-themes-enable-bold t))
 (setq doom-themes-enable-italic t)
-(setq doom-theme 'doom-one-light)
+(setq doom-theme 'doom-tomorrow-day)
 
 ;; font settings
 ;; the order of hook matters
