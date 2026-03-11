@@ -110,7 +110,7 @@
 ;; they are implemented.
 
 (setq dired-use-ls-dired nil)
-(add-hook! 'prog-mode-hook #'rainbow-delimiters-mode)
+;; (add-hook! 'prog-mode-hook #'rainbow-delimiters-mode)
 
 (map! :map evil-normal-state-map
       "q" nil)
@@ -130,7 +130,7 @@
 (after! org
       (progn (add-to-list 'org-src-lang-modes '("rust" . rustic))))
 
-(setq TeX-engine 'xetex)
+(setq TeX-engine 'luatex)
 
 (after! projectile
   (add-to-list 'projectile-project-root-files-bottom-up "Cargo.toml"))
@@ -147,3 +147,10 @@
    (setq lsp-rust-analyzer-cargo-load-out-dirs-from-check t)
    (setq lsp-rust-analyzer-proc-macro-enable t)))
 
+(after! eglot
+  (after! typst-ts-mode
+    (add-to-list 'eglot-server-programs
+                 `((typst-ts-mode) .
+                   ,(eglot-alternatives `(,typst-ts-lsp-download-path
+                                          "tinymist"
+                                          "typst-lsp"))))))
