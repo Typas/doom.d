@@ -147,6 +147,20 @@
    (setq lsp-rust-analyzer-cargo-load-out-dirs-from-check t)
    (setq lsp-rust-analyzer-proc-macro-enable t)))
 
+;; Fix: Register typst-ts-mode with Doom's tree-sitter system for grammar
+;; auto-install. Use put directly (not set-tree-sitter!) to avoid adding a
+;; bogus major-mode remap. fundamental-mode as fallback ensures the grammar
+;; check isn't skipped.
+(put 'typst-ts-mode '+tree-sitter '(fundamental-mode typst))
+(add-to-list 'auto-mode-alist '("\\.typ\\'" . typst-ts-mode))
+
+;; Fix: Doom installs grammars to doom-profile-data-dir/tree-sitter, but
+;; interactive treesit-install-language-grammar defaults to
+;; user-emacs-directory/tree-sitter (which Doom remaps to .local/cache/).
+(after! treesit
+  (setq treesit--install-language-grammar-out-dir-history
+        (list (file-name-concat doom-profile-data-dir "tree-sitter"))))
+
 (after! eglot
   (after! typst-ts-mode
     (add-to-list 'eglot-server-programs
@@ -154,3 +168,7 @@
                    ,(eglot-alternatives `(,typst-ts-lsp-download-path
                                           "tinymist"
                                           "typst-lsp"))))))
+(add-hook 'typst-ts-mode-local-vars-hook #'lsp! 'append)
+(map! :after typst-ts-mode
+      :map typst-ts-mode-map
+      :desc "Compile & preview" "C-c C-v" #'typst-ts-compile-and-preview)
