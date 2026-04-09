@@ -169,6 +169,23 @@
                                           "tinymist"
                                           "typst-lsp"))))))
 (add-hook 'typst-ts-mode-local-vars-hook #'lsp! 'append)
+(set-popup-rule! "^\\*typst-ts-compilation\\*" :vslot -2 :size 0.3 :quit t)
+(after! typst-ts-compile
+  (setq typst-ts-compile-hide-compilation-buffer-if-success nil)
+  (defadvice! +typst--auto-close-compilation-a (fn &optional preview)
+    "Auto-close compilation popup on success like doom/reload does."
+    :around #'typst-ts-compile
+    (funcall fn preview)
+    (when-let* ((buf (get-buffer "*typst-ts-compilation*"))
+                (w (get-buffer-window buf)))
+      (with-current-buffer buf
+        (add-hook 'compilation-finish-functions
+                  (lambda (_buf status)
+                    (when (string-match-p "finished" status)
+                      (when (window-live-p w)
+                        (delete-window w))
+                      (message "Typst compiled successfully.")))
+                  nil 'local)))))
 (map! :after typst-ts-mode
       :map typst-ts-mode-map
       :desc "Compile & preview" "C-c C-v" #'typst-ts-compile-and-preview)
