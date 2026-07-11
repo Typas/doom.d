@@ -54,3 +54,5 @@
 (package! valign)
 (package! color-theme-sanityinc-tomorrow)
 (package! typst-ts-mode :recipe (:host codeberg :repo "meow_king/typst-ts-mode"))
+(package! just-ts-mode)
+(package! mason)

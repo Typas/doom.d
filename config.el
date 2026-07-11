@@ -189,3 +189,11 @@
 (map! :after typst-ts-mode
       :map typst-ts-mode-map
       :desc "Compile & preview" "C-c C-v" #'typst-ts-compile-and-preview)
+
+(use-package! just-ts-mode
+  :config
+  (just-ts-mode-install-grammar))
+
+(use-package! mason
+  :config
+  (mason-setup))
