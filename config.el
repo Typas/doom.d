@@ -126,6 +126,10 @@
       :desc "Recompile" "c C-r" #'recompile
       :desc "Comment region" "c c" #'comment-region
       :desc "Uncomment region" "c u" #'uncomment-region)
+(map! :leader
+  :desc "LSP find implementation" "c i" #'eglot-find-implementation
+  :desc "LSP find type definition" "c t" #'eglot-find-typeDefinition
+  )
 
 (after! org
       (progn (add-to-list 'org-src-lang-modes '("rust" . rustic))))
